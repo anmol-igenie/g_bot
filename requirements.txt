@@ -1,0 +1,9 @@
+dotenv
+pandas
+numpy
+streamlit
+pandasai
+haystack-ai
+seaborn
+openai
+gradio
