@@ -1,9 +1,6 @@
-dotenv
-pandas
-numpy
-streamlit
-pandasai
+python-dotenv
+azure-storage-blob
 haystack-ai
-seaborn
-openai
+pinecone-haystack
+git+https://github.com/deepset-ai/haystack-experimental.git 
 gradio
