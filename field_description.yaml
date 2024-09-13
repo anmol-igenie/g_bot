@@ -1,0 +1,98 @@
+summary:
+
+  table_description: |
+    This dataset captures detailed metrics on brand performance, across various channels, against multiple components (attributes / dimension).
+    It provides insights into how well the brand meets customer expectations, its competitive standing, and the overall effectiveness of its strategies in driving loyalty and positive sentiment.
+    Main Attributes are : 'Premium', 'Affinity', 'Action', 'Advocacy', 'Superior', 'Buzz', 'Trust', 'Pulse Score'
+    Use Year_Month column for temporal field but STRICTLY as a string.
+
+    Definition: The Beat Score, Also called dimension or Component, is a score based on one of the Brand Equity Pulse Components: Trust, Superiority, Affinity, Buzz, Action, Advocacy, Premium. Together, these 7 Beat Scores make up the Pulse Score.
+
+  field_description:
+    Category: |
+      - Represents the name of the product category.
+      - Possible values but not limited to:
+        - 'Skin Care US': Represents the skincare category specific to the US market, focusing on products and brand performance in this segment.
+
+    MyBrand: |
+      - Indicates whether the brand is owned by the current user/client or not.
+      - Possible values:
+        - 0: Represents that the brand is not owned by user/client
+        - 1: Indicates that the brand is owned by user/client
+
+    Brand: |
+      - The specific brand name associated with the data entry.
+      - Essential for brand-level tracking and comparisons.
+
+    Prestige: |
+      - A prestige brand is a brand that is sold at a premium price point, an internal classification used by the client, primarily in skin and hair, but sometimes also in self care/vms
+      - Possible values:
+        - 'nan' or '' = False (not prestige)
+        - 0 = False (not prestige)
+        - 1 = True (prestige)
+
+    Brand Pulse Component: |
+      - Refers to the specific `component` or `aspect` or `attribute` being measured.
+      - Users may also call this “beat” or “dimension” or “attribute”.
+      - Possible values:
+        - 'Premium': Reflects the premium aspect of the brand, measuring its perceived quality and exclusivity.
+        - 'Affinity': Measures the emotional connection and loyalty that consumers feel towards the brand.
+        - 'Action': Indicates the extent to which consumers are inclined to take action in favor of the brand, such as making a purchase.
+        - 'Advocacy': Represents the degree to which consumers are likely to recommend the brand to others.
+        - 'Superior': Assesses the brand's perceived superiority over competitors in the market.
+        - 'Buzz': Captures the level of conversation and attention the brand is receiving in the public domain.
+        - 'Trust': Evaluates the trustworthiness of the brand as perceived by consumers.
+        - 'Pulse Score': The `overall brand's pulse score` (BEP score) combining various components to give a holistic measure of the brand's performance.
+
+    Detailed Metric: |
+      - Represents specific metrics within the brand pulse component, offering granular insights into brand performance.
+      - Possible values:
+        - 'Beat Score': Reflects the brand's performance in exceeding expectations or 'beating' competitors.
+        - 'Pulse Score': The overall score combining various components to give a holistic measure of the brand's performance.
+        - 'Rating_NPS': Indicates the Net Promoter Score (NPS) derived from customer ratings, offering insights into how likely customers are to recommend the brand to others based on their satisfaction.
+        - 'Rating_Average': Represents the average score across all customer ratings, providing a broad view of overall customer satisfaction levels.
+        - 'Review_NPS': Measures the Net Promoter Score (NPS) specifically from customer reviews, indicating the likelihood of reviewers recommending the brand based on their experience.
+        - 'Review_Average': Captures the average score from product reviews, summarizing customer feedback and satisfaction from written reviews.
+        - 'Share_Scaled': Reflects the scaled share of voice or presence the brand commands within its market or channel, indicating its visibility and dominance in conversations.
+        - 'Social_Average': Represents the average sentiment or rating derived from social media interactions, reflecting overall consumer sentiment on social platforms.
+        - 'Social_NPS': Measures the Net Promoter Score (NPS) from social media channels, indicating the likelihood that users who engage with the brand on these platforms will recommend it to others.
+
+    Month_Start_Date: |
+      - The first day date of the month in which the data was recorded.
+      - Available in 'YYYY-MM-DD' format like '2024-04-01'
+
+    Year_Month: |
+      - The Year-Month string against data.
+      - Crucial for time-series analysis and trend identification and aggregation.
+      - Available as `2024-06 > June`, `2024-05 > May` etc..
+      - Always consider first by sorting this field in descending order.
+
+    Year: |
+      - The year in which the data was recorded.
+      - Crucial for time-series analysis and trend identification and aggregation.
+      - Available as Year 'YYYY' extracted from date for example - 2022, 2023, 2024 etc..
+
+    Score: |
+      - Numerical value representing the performance or measurement within the dataset.
+      - Key for quantitative analysis.
+
+    Score_Type: |
+      - The type or category of the score, distinguishing between different forms of measurement or assessment.
+      - Possible values:
+        - 'Sub Score': A subcategory of the overall score, providing a more detailed breakdown of specific metrics, see “detailed metric field/column for which score this is”
+        - 'Beat Score': Beat Score helps to further dig deep into Brand pulse component, also called Dimension, Dimension Score, Brand Equity Pulse Component, Component
+        - 'Pulse Score': The `overall brand's pulse score` combining various components to give a holistic measure of the brand's performance. Pulse Score also called BEP Score, Brand Equity Pulse Score, BE Score, Score or Brand Equity
+
+    Channel: |
+      - The medium or platform through which data was collected or the brand interacted with consumers.
+      - Important for understanding distribution or communication channels.
+      - Possible values:
+        - 'Social': Refers to social media platforms where the brand is being discussed or engaged with by consumers.
+        - 'Reviews': Includes customer reviews across various platforms, offering insights into consumer opinions.
+        - 'Ratings': Quantitative ratings given by consumers, often used to gauge satisfaction or quality.
+        - 'Search': Data collected from search engines, indicating the volume and type of brand-related queries.
+        - 'Mixed': A combination of different channels, providing a more comprehensive view of brand interactions.
+
+    TotalConversations: |
+      - The total number of conversations or interactions recorded.
+      - Often used to measure engagement or activity levels.
