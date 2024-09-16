@@ -4,3 +4,4 @@ haystack-ai
 pinecone-haystack
 git+https://github.com/deepset-ai/haystack-experimental.git 
 gradio
+tiktoken

@@ -4,7 +4,7 @@ summary:
     This dataset captures detailed metrics on brand performance, across various channels, against multiple components (attributes / dimension).
     It provides insights into how well the brand meets customer expectations, its competitive standing, and the overall effectiveness of its strategies in driving loyalty and positive sentiment.
     Main Attributes are : 'Premium', 'Affinity', 'Action', 'Advocacy', 'Superior', 'Buzz', 'Trust', 'Pulse Score'
-    Use Year_Month column for temporal field but STRICTLY as a string.
+    Use Year_Month column for temporal field but STRICTLY as a string. For latest /previous /last month requirements, STRICTLY sort it descending and take from top.
 
     Definition: The Beat Score, Also called dimension or Component, is a score based on one of the Brand Equity Pulse Components: Trust, Superiority, Affinity, Buzz, Action, Advocacy, Premium. Together, these 7 Beat Scores make up the Pulse Score.
 
