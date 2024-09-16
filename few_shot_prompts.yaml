@@ -1,0 +1,306 @@
+List all "My Brands" or what brands I own: '
+  # Filter for rows where MyBrand is 1
+
+  df_my_brands = data[data[''MyBrand''] == 1][''Brand''].unique()
+
+  df_my_brands
+  '
+
+overall score across all channels: '
+  # Group by Channel and calculate the mean score across all channels
+
+  df_overall_score = data.groupby(''Channel'')[''Score''].mean()
+
+  df_overall_score
+  '
+
+What is the overall score across attributes for the latest month?: '
+
+  # All unique months
+
+  unique_months = data[''Year_Month''].unique()
+
+  # Sorted unique months 
+
+  sorted_unique_months = sorted(unique_months, reverse=True)
+
+  # Filter data for the past 3 months
+
+  past_1_months = sorted_unique_months[:1]
+
+  df_last_1_month = data[data[''Year_Month''].isin(past_1_months)]
+
+  # Group by Detailed Metric and calculate the mean score across attributes for the latest month
+
+  df_overall_score_attributes = df_last_1_month.groupby([''Year_Month'',''Brand Pulse Component''])[''Score''].mean()
+
+  df_overall_score_attributes
+  '
+
+filter the latest / past 3 months data: '
+  # All unique months
+
+  unique_months = data[''Year_Month''].unique()
+
+  # Sorted unique months 
+
+  sorted_unique_months = sorted(unique_months, reverse=True)
+
+  # Filter data for the past 3 months
+
+  past_3_months = sorted_unique_months[:3]
+
+  df_last_3_months = data[data[''Year_Month''].isin(past_3_months)]
+
+  df_last_3_months
+'
+
+What are the Beat Scores of my brands?: '
+  # Filter the dataframe for ''MyBrand'' == 1 and ''Score_Type'' == ''Beat Score''
+
+  my_brands_beat_scores = data[(data[''MyBrand''] == 1) & (data[''Score_Type''] == ''Beat Score'')]
+
+  # Sanity check: Ensure the filtered dataframe is not empty
+
+  assert not my_brands_beat_scores.empty, "No Beat Scores found for your brands."
+
+  # Aggregate the scores by brand
+
+  beat_scores_by_brand = my_brands_beat_scores.groupby(''Brand'')[''Score''].mean().reset_index()
+
+  # Sort the results by score in descending order
+
+  beat_scores_by_brand = beat_scores_by_brand.sort_values(by=''Score'', ascending=False)
+
+  beat_scores_by_brand
+'
+
+Which brand has the highest score in the Buzz component?: '
+  # Filter the dataframe for the ''Buzz'' component
+
+  buzz_df = data[data[''Brand Pulse Component''] == ''Buzz'']
+
+  # Ensure there are rows after filtering
+
+  assert not buzz_df.empty, "No data available for the ''Buzz'' component."
+
+  # Find all the brands with the highest Buzz score
+
+  highest_buzz_rows = buzz_df.loc[buzz_df[''Score'']==buzz_df[''Score''].max()]['Brand'].unique()
+
+  highest_buzz_rows
+'
+
+How can Neutrogena improve its equity score? (show worst performing dimensions and competitors): '
+
+  # Find worst performing dimensions and compare equity score
+
+  df_filtered = data[data[''Detailed Metric''] == ''Beat Score'']
+
+  df_worst = df_filtered[df_filtered[''Brand''] == ''Neutrogena''].sort_values(''Score'').head()
+
+  df_worst
+
+  '
+How does Neutrogena compare to other brands in the market?: '
+
+  # Filter for Neutrogena and other brands, compare by score
+
+  df_comparison = data.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  df_comparison
+
+  '
+How does Neutrogena score compare to top competitors?: '
+
+  # Filter for Neutrogena and its competitors
+
+  df_filtered = data[data[''Brand''].isin([''Neutrogena'', ''CeraVe'', ''Olay'', ''Garnier'',
+  ''La Roche-Posay''])]
+
+  # Compare scores across the filtered brands
+
+  df_comparison = df_filtered.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  df_comparison
+
+  '
+How does the score for Neutrogena trends in the past years?: '
+
+  # Filter for Neutrogena and group by year
+
+  df_neutrogena = data[data[''Brand''] == ''Neutrogena'']
+
+  df_trend = df_neutrogena.groupby(''Year'')[''Score''].mean()
+
+  df_trend
+
+  '
+How is Neutrogena performing across various attributes?: '
+
+  # Filter for Neutrogena and group by detailed metrics to evaluate performance across
+  attributes
+
+  df_neutrogena = data[data[''Brand''] == ''Neutrogena'']
+
+  df_attributes = df_neutrogena.groupby(''Detailed Metric'')[''Score''].mean().sort_values(ascending=False)
+
+  df_attributes
+
+  '
+How is Neutrogena performing overall?: '
+
+  # General performance analysis for Neutrogena across all metrics
+
+  df_neutrogena = data[data[''Brand''] == ''Neutrogena'']
+
+  df_overall = df_neutrogena.groupby(''Detailed Metric'')[''Score''].mean().sort_values(ascending=False)
+
+  df_overall
+
+  '
+Is Neutrogena doing better or worse on superiority than its competitors?: '
+
+  # Use ''Superiority Score'' for comparison
+
+  df_filtered = data[data[''Detailed Metric''] == ''Superiority Score'']
+
+  df_comparison = df_filtered.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  df_comparison
+
+  '
+Is Neutrogena more or less trusted than other brands like CeraVe, Olay, Garnier, and La Roche-Posay?: '
+
+  # Use ''Trust Score'' as a metric for comparison
+
+  df_filtered = data[data[''Detailed Metric''] == ''Trust Score'']
+
+  df_comparison = df_filtered.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  df_comparison
+
+  '
+What (dimensions) is Neutrogena performing better at than CeraVe, Olay, Garnier, and La Roche-Posay?: '
+
+  # Filter for the required brands and detailed metrics comparison
+
+  df_filtered = data[data[''Brand''].isin([''Neutrogena'', ''CeraVe'', ''Olay'', ''Garnier'',
+  ''La Roche-Posay''])]
+
+  df_grouped = df_filtered.groupby([''Brand'', ''Detailed Metric''])[''Score''].mean().unstack().T
+
+  df_grouped[''Neutrogena''] > df_grouped[[''CeraVe'', ''Olay'', ''Garnier'', ''La
+  Roche-Posay'']].mean(axis=1)
+
+  '
+What (dimensions) is Neutrogena performing worse at compared to CeraVe, Olay, Garnier, and La Roche-Posay?: '
+
+  # Same approach as previous but with reverse condition
+
+  df_filtered = data[data[''Brand''].isin([''Neutrogena'', ''CeraVe'', ''Olay'', ''Garnier'',
+  ''La Roche-Posay''])]
+
+  df_grouped = df_filtered.groupby([''Brand'', ''Detailed Metric''])[''Score''].mean().unstack().T
+
+  df_grouped[''Neutrogena''] < df_grouped[[''CeraVe'', ''Olay'', ''Garnier'', ''La
+  Roche-Posay'']].mean(axis=1)
+
+  '
+What are the drivers of superiority for Neutrogena compared to CeraVe, Olay, Garnier, and La Roche-Posay?: '
+
+  # Use ''Superiority Score'' and compare drivers across the brands
+
+  df_filtered = data[(data[''Brand''].isin([''Neutrogena'', ''CeraVe'', ''Olay'',
+  ''Garnier'', ''La Roche-Posay''])) & (data[''Detailed Metric''] == ''Superiority
+  Score'')]
+
+  df_drivers = df_filtered.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  df_drivers
+
+  '
+What does Neutrogena stand for in the market?: '
+
+  # General analysis of brand performance
+
+  df_neutrogena = data[data[''Brand''] == ''Neutrogena'']
+
+  df_summary = df_neutrogena.groupby(''Detailed Metric'')[''Score''].mean()
+
+  df_summary
+
+  '
+Which brand has the highest buzz score?: '
+
+  # Filter for ''Buzz Score'' in Detailed Metric
+
+  df_buzz = data[data[''Detailed Metric''] == ''Buzz Score'']
+
+  # Find the brand with the highest buzz score
+
+  highest_buzz = df_buzz.loc[df_buzz[''Score''].idxmax(), [''Brand'', ''Score'']]
+
+  highest_buzz
+
+  '
+Which brands are gaining or losing momentum, and how does Neutrogena fit into this?: '
+
+  # Compare ''Momentum Score'' across brands and find Neutrogena''s position
+
+  df_filtered = data[data[''Detailed Metric''] == ''Momentum Score'']
+
+  df_momentum = df_filtered.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  neutrogena_position = df_momentum[df_momentum.index == ''Neutrogena'']
+
+  df_momentum, neutrogena_position
+
+  '
+Which brands have the highest pulse scores, and where does Neutrogena stand?: '
+
+  # Filter for ''Pulse Score'' and find the top brands
+
+  df_pulse = data[data[''Detailed Metric''] == ''Pulse Score'']
+
+  df_pulse_ranking = df_pulse.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  neutrogena_position = df_pulse_ranking[df_pulse_ranking.index == ''Neutrogena'']
+
+  df_pulse_ranking, neutrogena_position
+
+  '
+Why is Neutrogena's pulse score increasing or decreasing?: '
+
+  # Analyze Neutrogena''s pulse score trend over time
+
+  df_neutrogena = data[(data[''Brand''] == ''Neutrogena'') & (data[''Detailed Metric'']
+  == ''Pulse Score'')]
+
+  df_trend = df_neutrogena.groupby(''Year'')[''Score''].mean().diff()
+
+  df_trend
+
+  '
+Why is Neutrogena's score up or down?: '
+
+  # Filter for Neutrogena and calculate score trend over time
+
+  df_neutrogena = data[data[''Brand''] == ''Neutrogena'']
+
+  df_trend = df_neutrogena.groupby(''Year'')[''Score''].mean().diff()
+
+  df_trend
+
+  '
+display which brand has grown its equity score the most? Which one has lost the most?: '
+
+  # Use ''Equity Score'' to determine the biggest changes
+
+  df_filtered = data[data[''Detailed Metric''] == ''Equity Score'']
+
+  df_growth = df_filtered.groupby(''Brand'')[''Score''].mean().sort_values(ascending=False)
+
+  df_growth
+
+  '
