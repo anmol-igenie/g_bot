@@ -5,3 +5,4 @@ pinecone-haystack
 git+https://github.com/deepset-ai/haystack-experimental.git 
 gradio
 tiktoken
+sentence-transformers>=3.0.0
